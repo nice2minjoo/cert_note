@@ -96,7 +96,7 @@ def parseDataex(data):
     
     with filter_container:
         if search_tab2 == "Module":
-            search_str = st.text_input("Input")
+            search_str = st.text_input("Input (e.g, BG96, bg96, bg)")
             str_expr = f"Module.str.contains('{search_str}', case=False)"
             df = df.query(str_expr)
         
