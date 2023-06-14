@@ -139,6 +139,7 @@ def readDatabase(url, tab):
         st.write(err)
     
 # start from here
+st.set_page_config(page_title = "Quectel Certification Status")
 st.title("Quectel Certification Status")
 st.write("This is a certification status of Quectel Korea for domestic carriers.")
 
