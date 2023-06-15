@@ -26,8 +26,8 @@ def parseData(data):
     version_list = []
     status_list = []
     desc_list = []
-	
-	for result in data['results']:
+    
+    for result in data['results']:
         mod_output = result['properties']['Module']['select']['name']
         vend_output = result['properties']['Vendor']['select']['name']
         chip_output = result['properties']['Chipset']['rich_text'][0]['plain_text']
@@ -42,16 +42,15 @@ def parseData(data):
             desc_output = ''
         else:
             desc_output = result['properties']['Description']['rich_text'][0]['plain_text']
-		mod_list.append(mod_output)
+        mod_list.append(mod_output)
         vend_list.append(vend_output)
         chip_list.append(chip_output)
         tech_list.append(tech_output)
         carrier_list.append(carrier_output)
         version_list.append(version_output)
         status_list.append(status_output)
-        desc_list.append(desc_output)
 
-	df = pd.DataFrame({
+    df = pd.DataFrame({
         "Module" : mod_list,
         "Vendor" : vend_list,
         "Chipset" : chip_list,
@@ -65,7 +64,7 @@ def parseData(data):
     str_expr = f"Module.str.contains('{search_tab1}', case=False)"
     df = df.query(str_expr)
     st.dataframe(df, use_container_width=True)
-	
+
 def parseDataex(data):
     mod_listex = []
     carrier_listex = []
@@ -85,8 +84,8 @@ def parseDataex(data):
         carrier_listex.append(carrier_outputex)
         date_listex.append(date_outputex)
         desc_listex.append(desc_outputex)
-		
-	df = pd.DataFrame({
+
+    df = pd.DataFrame({
         "Module" : mod_listex,
         "Carrier" : carrier_listex,
         "Date" : date_listex,
@@ -94,14 +93,14 @@ def parseDataex(data):
     })
     
     filter_container = st.container()
-	
-	with filter_container:
+    
+    with filter_container:
         if search_tab2 == "Module":
             search_str = st.text_input("Input (e.g, BG96, bg96, bg)")
             str_expr = f"Module.str.contains('{search_str}', case=False)"
             df = df.query(str_expr)
             fDate = 0
-        
+
         elif search_tab2 == "Date":
             min_date = dt.date(year=2020,month=1,day=1)
             max_date = dt.datetime.now().date()
@@ -113,7 +112,7 @@ def parseDataex(data):
     
     if fDate == 0:
         st.dataframe(df, use_container_width=True)
-		
+
 def readDatabase(url, tab):
     response = requests.post(url, json=payload, headers=headers)
     data_bytes = response.content
@@ -139,7 +138,7 @@ def readDatabase(url, tab):
     elif '\"status\":404' in response.text:
         err = f'[readDatabase] {response}'
         st.write(err)
-		
+
 # start from here
 st.set_page_config(page_title = "Quectel Certification Status")
 st.title("Quectel Certification Status")
