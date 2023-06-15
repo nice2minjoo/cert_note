@@ -49,6 +49,7 @@ def parseData(data):
         carrier_list.append(carrier_output)
         version_list.append(version_output)
         status_list.append(status_output)
+        desc_list.append(desc_output)
 
     df = pd.DataFrame({
         "Module" : mod_list,
