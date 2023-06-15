@@ -50,7 +50,7 @@ def parseData(data):
         version_list.append(version_output)
         status_list.append(status_output)
         desc_list.append(desc_output)
-		
+
 	df = pd.DataFrame({
         "Module" : mod_list,
         "Vendor" : vend_list,
