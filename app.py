@@ -71,7 +71,6 @@ def parseDataex(data):
     carrier_listex = []
     date_listex = []
     desc_listex = []
-    fDate = 0
     
     for result in data['results']:
         mod_outputex = result['properties']['Module']['select']['name']
@@ -100,19 +99,16 @@ def parseDataex(data):
             search_str = st.text_input("Input (e.g, BG96, bg96, bg)")
             str_expr = f"Module.str.contains('{search_str}', case=False)"
             df = df.query(str_expr)
-            fDate = 0
 
         elif search_tab2 == "Date":
             min_date = dt.date(year=2020,month=1,day=1)
             max_date = dt.datetime.now().date()
-            fDate = 1
             
             slider = st.slider('Date', min_value=min_date, max_value=max_date, value=(min_date, max_date))
             # st.write(str(slider[0]), slider[1])
-            df[(df['Date'] >= str(slider[0])) & (df['Date'] <= str(slider[1]))]
+            df = df[(df['Date'] >= str(slider[0])) & (df['Date'] <= str(slider[1]))]
     
-    if fDate == 0:
-        st.dataframe(df, use_container_width=True)
+    st.dataframe(df, use_container_width=True)
 
 def readDatabase(url, tab):
     response = requests.post(url, json=payload, headers=headers)
