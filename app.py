@@ -100,13 +100,19 @@ def parseDataex(data):
             str_expr = f"Module.str.contains('{search_str}', case=False)"
             df = df.query(str_expr)
 
-        elif search_tab2 == "Date":
+        elif search_tab2 == "Date(slider)":
             min_date = dt.date(year=2020,month=1,day=1)
             max_date = dt.datetime.now().date()
             
             slider = st.slider('Date', min_value=min_date, max_value=max_date, value=(min_date, max_date))
             # st.write(str(slider[0]), slider[1])
             df = df[(df['Date'] >= str(slider[0])) & (df['Date'] <= str(slider[1]))]
+
+        elif search_tab2 == "Date":
+            from_date = st.date_input("From", dt.date(2020, 1, 1))
+            to_date = st.date_input("To", dt.datetime.now().date())
+            
+            df = df[(df['Date'] >= str(from_date)) & (df['Date'] <= str(to_date))]
     
     st.dataframe(df, use_container_width=True)
 
@@ -152,7 +158,6 @@ with tab1:
 with tab2:
     with st.spinner("Waiting for loading data..."):
         tab = 1
-        search_tab2 = st.selectbox("Search with", ("Module","Date"))
-        # search_tab2 = st.text_input("Input module name (e.g, BG96, bg96, bg)")
+        search_tab2 = st.selectbox("Search with", ("Module","Date(slider)","Date"))
         notion_api_link = f"https://api.notion.com/v1/databases/{historyID}/query"
         readDatabase(notion_api_link, tab)
