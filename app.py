@@ -9,7 +9,7 @@ token = st.secrets["token"]
 databasdID = st.secrets["databaseID"]
 historyID = st.secrets["historyID"]
 
-payload = {"page_size": 1000}
+# payload = {"page_size": 1000}
 headers = {
     "Authorization": token,
     "accept": "application/json",
@@ -117,7 +117,8 @@ def parseDataex(data):
     st.dataframe(df, use_container_width=True)
 
 def readDatabase(url, tab):
-    response = requests.post(url, json=payload, headers=headers)
+    # response = requests.post(url, json=payload, headers=headers)
+    response = requests.post(url, headers=headers)
     data_bytes = response.content
     data_str = data_bytes.decode('utf-8')
     data = json.loads(data_str)
